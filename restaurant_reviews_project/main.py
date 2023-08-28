@@ -1,26 +1,28 @@
-from customer import Customer
-from restaurant import Restaurant
-from review import Review
+from customer import CustomerRepository
+from restaurant import RestaurantRepository
+from review import ReviewRepository
 
-customer1 = Customer("John", "Doe")
-customer2 = Customer("Jane", "Smith")
+# Create sample instances
+customer1 = CustomerRepository.create("John", "Doe")
+customer2 = CustomerRepository.create("Jane", "Smith")
 
-restaurant1 = Restaurant("Tasty Burgers")
-restaurant2 = Restaurant("Pasta Paradise")
+restaurant1 = RestaurantRepository.create("Tasty Burgers")
+restaurant2 = RestaurantRepository.create("Pasta Paradise")
 
-review1 = Review(customer1, restaurant1, 4)
-review2 = Review(customer2, restaurant1, 5)
-review3 = Review(customer2, restaurant2, 3)
+ReviewRepository.create(customer1, restaurant1, 4)
+ReviewRepository.create(customer2, restaurant1, 5)
+ReviewRepository.create(customer2, restaurant2, 3)
 
-
+# Test methods
 print("Customers:")
-for customer in [customer1, customer2]:
+for customer in CustomerRepository.all():
     print(customer.full_name())
 
 print("\nRestaurants:")
-for restaurant in [restaurant1, restaurant2]:
+for restaurant in RestaurantRepository.all():
     print(restaurant.name)
 
 print("\nReviews for", restaurant1.name)
-for review in [review1, review2]:
-    print(f"{review.customer.full_name()}: {review.rating}")
+for review in ReviewRepository.all():
+    if review.restaurant == restaurant1:
+        print(f"{review.customer.full_name()}: {review.rating}")
